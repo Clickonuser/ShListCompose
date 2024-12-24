@@ -18,7 +18,7 @@ import com.example.shoplistcompose.ui.theme.BlueLight
 fun MainScreen() {
     Scaffold(
         bottomBar = {
-
+            BottomNav()
         },
         floatingActionButton = {
             FloatingActionButton(
