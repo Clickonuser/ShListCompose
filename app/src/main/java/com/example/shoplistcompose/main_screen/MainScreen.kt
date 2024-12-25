@@ -10,15 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.shoplistcompose.R
+import com.example.shoplistcompose.navigation.NavigationGraph
 import com.example.shoplistcompose.ui.theme.BlueLight
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
+
+    val navController = rememberNavController()
+
     Scaffold(
         bottomBar = {
-            BottomNav()
+            BottomNav(navController)
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -35,6 +40,6 @@ fun MainScreen() {
             }
         },
     ) {
-
+        NavigationGraph(navController)
     }
 }
