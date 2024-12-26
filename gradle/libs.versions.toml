@@ -14,6 +14,7 @@ datastore = "1.1.1"
 navigationCompose = "2.8.1"
 hiltAndroidx = "1.2.0"
 room = "2.6.1"
+constrainLayoutVersion = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref =
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-consraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constrainLayoutVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
