@@ -1,4 +1,4 @@
-package com.example.shoplistcompose.utils
+package com.example.shoplistcompose.dialog
 
 import androidx.compose.runtime.MutableState
 

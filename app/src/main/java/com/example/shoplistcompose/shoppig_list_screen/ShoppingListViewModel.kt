@@ -1,12 +1,12 @@
 package com.example.shoplistcompose.shoppig_list_screen
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplistcompose.data.ShoppingListItem
 import com.example.shoplistcompose.data.ShoppingListRepository
-import com.example.shoplistcompose.utils.DialogController
+import com.example.shoplistcompose.dialog.DialogController
+import com.example.shoplistcompose.dialog.DialogEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +15,8 @@ import javax.inject.Inject
 class ShoppingListViewModel @Inject constructor(
     private val repository: ShoppingListRepository
 ) : ViewModel(), DialogController {
+
+    private val list = repository.getAllItems()
 
     private var listItem: ShoppingListItem? = null
 
@@ -47,9 +49,37 @@ class ShoppingListViewModel @Inject constructor(
             }
             is ShoppingListEvent.OnShowEditDialog -> {
                 listItem = event.item
+                openDialog.value = true
+                editableText.value = listItem?.name ?: ""
+                dialogTitle.value = "List name:"
+                showEditableText.value = true
             }
             is ShoppingListEvent.OnShowDeleteDialog -> {
-
+                listItem = event.item
+                openDialog.value = true
+                dialogTitle.value = "Delete this name?"
+                showEditableText.value = false
+            }
+        }
+    }
+    fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            is DialogEvent.OnCancel -> {
+                openDialog.value = false
+            }
+            is DialogEvent.OnConfirm -> {
+                if (showEditableText.value) {
+                   onEvent(ShoppingListEvent.OnItemSave)
+                }
+                else {
+                    viewModelScope.launch {
+                        listItem?.let { repository.deleteItem(it) }
+                    }
+                }
+                openDialog.value = false
+            }
+            is DialogEvent.OnTextChange -> {
+                editableText.value = event.text
             }
         }
     }
