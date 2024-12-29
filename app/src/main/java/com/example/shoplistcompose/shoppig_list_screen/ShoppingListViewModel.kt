@@ -7,7 +7,10 @@ import com.example.shoplistcompose.data.ShoppingListItem
 import com.example.shoplistcompose.data.ShoppingListRepository
 import com.example.shoplistcompose.dialog.DialogController
 import com.example.shoplistcompose.dialog.DialogEvent
+import com.example.shoplistcompose.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +20,9 @@ class ShoppingListViewModel @Inject constructor(
 ) : ViewModel(), DialogController {
 
     private val list = repository.getAllItems()
+
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     private var listItem: ShoppingListItem? = null
 
@@ -45,7 +51,7 @@ class ShoppingListViewModel @Inject constructor(
                 }
             }
             is ShoppingListEvent.OnItemClick -> {
-
+                sendUiEvent(UiEvent.Navigate(event.route))
             }
             is ShoppingListEvent.OnShowEditDialog -> {
                 listItem = event.item
@@ -81,6 +87,11 @@ class ShoppingListViewModel @Inject constructor(
             is DialogEvent.OnTextChange -> {
                 editableText.value = event.text
             }
+        }
+    }
+    private fun sendUiEvent(event: UiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
         }
     }
 }
