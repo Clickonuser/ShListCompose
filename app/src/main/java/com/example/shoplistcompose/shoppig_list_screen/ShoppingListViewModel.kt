@@ -68,7 +68,7 @@ class ShoppingListViewModel @Inject constructor(
             }
         }
     }
-    fun onDialogEvent(event: DialogEvent) {
+    override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             is DialogEvent.OnCancel -> {
                 openDialog.value = false
