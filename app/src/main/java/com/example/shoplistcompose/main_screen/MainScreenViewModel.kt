@@ -51,6 +51,7 @@ class MainScreenViewModel @Inject constructor(
         when (event) {
             is DialogEvent.OnCancel -> {
                 openDialog.value = false
+                editableText.value = ""
             }
             is DialogEvent.OnConfirm -> {
                 onEvent(MainScreenEvent.OnItemSave)
