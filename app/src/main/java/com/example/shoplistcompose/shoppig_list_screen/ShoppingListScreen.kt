@@ -22,7 +22,7 @@ fun ShoppingListScreen(
             .background(GrayLight),
     ) {
         items(itemsList.value) {
-            UiShoppingListItem()
+            UiShoppingListItem(it)
         }
     }
 }

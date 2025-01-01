@@ -24,13 +24,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.shoplistcompose.R
+import com.example.shoplistcompose.data.ShoppingListItem
+import com.example.shoplistcompose.ui.theme.BlueLight
 import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.GreenLight
 import com.example.shoplistcompose.ui.theme.LightText
 import com.example.shoplistcompose.ui.theme.Red
 
 @Composable
-fun UiShoppingListItem() {
+fun UiShoppingListItem(item: ShoppingListItem) {
     ConstraintLayout(
         modifier = Modifier.padding(
             start = 3.dp, top = 18.dp, end = 3.dp
@@ -55,7 +57,7 @@ fun UiShoppingListItem() {
                     .padding(8.dp)
             ) {
                 Text(
-                    text = "list 1",
+                    text = item.name,
                     style = TextStyle(
                         color = DarkText,
                         fontWeight = FontWeight.Bold,
@@ -63,7 +65,7 @@ fun UiShoppingListItem() {
                     )
                 )
                 Text(
-                    text = "12/12/2024 13:00",
+                    text = item.time,
                     style = TextStyle(
                         color = LightText,
                         fontSize = 12.sp
@@ -73,6 +75,8 @@ fun UiShoppingListItem() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 5.dp),
+                    progress = { 0.5f },
+                    color = BlueLight,
                     trackColor = Color.LightGray // changes may come later
                 )
             }
@@ -133,7 +137,7 @@ fun UiShoppingListItem() {
                 .padding(end = 5.dp)
         ) {
             Text(
-                text = "15/5",
+                text = "${item.allItemsCount}/${item.allSelectedItemsCount}",
                 fontSize = 16.sp,
                 modifier = Modifier
                     .background(Red)
