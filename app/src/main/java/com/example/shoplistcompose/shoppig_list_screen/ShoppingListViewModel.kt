@@ -19,7 +19,7 @@ class ShoppingListViewModel @Inject constructor(
     private val repository: ShoppingListRepository
 ) : ViewModel(), DialogController {
 
-    private val list = repository.getAllItems()
+    val list = repository.getAllItems()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
