@@ -1,6 +1,7 @@
 package com.example.shoplistcompose.shoppig_list_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,7 @@ import com.example.shoplistcompose.ui.theme.LightText
 import com.example.shoplistcompose.ui.theme.Red
 
 @Composable
-fun UiShoppingListItem(item: ShoppingListItem) {
+fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> Unit) {
     ConstraintLayout(
         modifier = Modifier.padding(
             start = 3.dp, top = 18.dp, end = 3.dp
@@ -47,6 +48,8 @@ fun UiShoppingListItem(item: ShoppingListItem) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
+                }.clickable {
+
                 },
             shape = RoundedCornerShape(5.dp) // changes may come later
         ) {
@@ -83,7 +86,9 @@ fun UiShoppingListItem(item: ShoppingListItem) {
         }
 
         IconButton(
-            onClick = {},
+            onClick = {
+                onEvent(ShoppingListEvent.OnShowDeleteDialog(item))
+            },
             modifier = Modifier
                 .constrainAs(deleteButton) {
                     top.linkTo(card.top)
@@ -105,7 +110,9 @@ fun UiShoppingListItem(item: ShoppingListItem) {
         }
 
         IconButton(
-            onClick = {},
+            onClick = {
+                onEvent(ShoppingListEvent.OnShowEditDialog(item))
+            },
             modifier = Modifier
                 .constrainAs(editButton) {
                     top.linkTo(card.top)

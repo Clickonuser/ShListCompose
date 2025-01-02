@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.shoplistcompose.dialog.MainDialog
 import com.example.shoplistcompose.ui.theme.GrayLight
 
 @Composable
@@ -25,7 +26,10 @@ fun ShoppingListScreen(
         contentPadding = PaddingValues(bottom = 100.dp)
     ) {
         items(itemsList.value) {
-            UiShoppingListItem(it)
+            UiShoppingListItem(it) { event ->
+                viewModel.onEvent(event)
+            }
         }
     }
+    MainDialog(dialogController = viewModel)
 }
