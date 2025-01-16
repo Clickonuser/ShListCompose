@@ -31,6 +31,7 @@ import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.GreenLight
 import com.example.shoplistcompose.ui.theme.LightText
 import com.example.shoplistcompose.ui.theme.Red
+import com.example.shoplistcompose.utils.Routes
 
 @Composable
 fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> Unit) {
@@ -49,7 +50,7 @@ fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> U
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }.clickable {
-
+                    onEvent(ShoppingListEvent.OnItemClick(Routes.ADD_ITEM))
                 },
             shape = RoundedCornerShape(5.dp) // changes may come later
         ) {
