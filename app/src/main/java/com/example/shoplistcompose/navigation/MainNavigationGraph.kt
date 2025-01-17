@@ -15,7 +15,7 @@ fun MainNavigationGraph() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.MAIN_SCREEN) {
-        composable(Routes.ADD_ITEM) {
+        composable(Routes.ADD_ITEM + "/{listId}") {
             AddItemScreen()
         }
         composable(Routes.NEW_NOTE) {

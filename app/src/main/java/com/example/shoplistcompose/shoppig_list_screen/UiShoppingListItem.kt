@@ -50,7 +50,9 @@ fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> U
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }.clickable {
-                    onEvent(ShoppingListEvent.OnItemClick(Routes.ADD_ITEM))
+                    onEvent(ShoppingListEvent.OnItemClick(
+                        Routes.ADD_ITEM + "/${item.id}"
+                    ))
                 },
             shape = RoundedCornerShape(5.dp) // changes may come later
         ) {
