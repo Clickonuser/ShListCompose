@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shoplistcompose.R
 import com.example.shoplistcompose.data.AddItem
+import com.example.shoplistcompose.ui.theme.BlueLight
 
 @Composable
 fun UiAddItem(item: AddItem, onEvent: (AddItemEvent) -> Unit) {
@@ -49,7 +51,10 @@ fun UiAddItem(item: AddItem, onEvent: (AddItemEvent) -> Unit) {
                 checked = item.isCheck,
                 onCheckedChange = { isChecked ->
                     onEvent(AddItemEvent.OnCheckedChange(item.copy(isCheck = isChecked)))
-                }
+                },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = BlueLight
+                )
             )
             IconButton(onClick = {
                 onEvent(AddItemEvent.OnDelete(item))

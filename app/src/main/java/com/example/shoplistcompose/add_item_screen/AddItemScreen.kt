@@ -55,12 +55,12 @@ fun AddItemScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(GrayLight)
+                .windowInsetsPadding(WindowInsets.systemBars), //
         ) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
-                    .windowInsetsPadding(WindowInsets.systemBars), //
             ) {
                 Row(
                     modifier = Modifier
@@ -108,7 +108,10 @@ fun AddItemScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 10.dp)
+                    .padding(
+                        start = 5.dp,
+                        end = 5.dp
+                    )
             ) {
                 if (itemsList != null) {
                     items(itemsList.value) {item ->
