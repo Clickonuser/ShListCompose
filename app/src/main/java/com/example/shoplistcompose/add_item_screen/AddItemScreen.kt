@@ -70,9 +70,9 @@ fun AddItemScreen(
                 ) {
                     TextField(
                         modifier = Modifier.weight(1f),
-                        value = "",
-                        onValueChange = {
-
+                        value = viewModel.itemText.value,
+                        onValueChange = { text ->
+                            viewModel.onEvent(AddItemEvent.OnTextChange(text))
                         },
                         label = {
                             Text(
@@ -96,7 +96,7 @@ fun AddItemScreen(
                     )
                     IconButton(
                         onClick = {
-
+                            viewModel.onEvent(AddItemEvent.OnItemSave)
                         }) {
                         Icon(
                             painter = painterResource(id = R.drawable.add_icon),
@@ -112,8 +112,8 @@ fun AddItemScreen(
             ) {
                 if (itemsList != null) {
                     items(itemsList.value) {item ->
-                        UiAddItem(item = item) {
-
+                        UiAddItem(item = item) { event ->
+                            viewModel.onEvent(event)
                         }
 
                     }
