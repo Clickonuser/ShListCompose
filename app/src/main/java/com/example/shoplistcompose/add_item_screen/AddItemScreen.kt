@@ -38,6 +38,7 @@ import com.example.shoplistcompose.R
 import com.example.shoplistcompose.dialog.MainDialog
 import com.example.shoplistcompose.ui.theme.BlueLight
 import com.example.shoplistcompose.ui.theme.DarkText
+import com.example.shoplistcompose.ui.theme.EmptyText
 import com.example.shoplistcompose.ui.theme.GrayLight
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -133,7 +134,8 @@ fun AddItemScreen(
                     .wrapContentHeight(),
                 text = "Empty",
                 fontSize = 25.sp,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = EmptyText
             )
         }
     }

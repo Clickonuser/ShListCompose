@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoplistcompose.dialog.MainDialog
+import com.example.shoplistcompose.ui.theme.EmptyText
 import com.example.shoplistcompose.ui.theme.GrayLight
 import com.example.shoplistcompose.utils.UiEvent
 
@@ -55,7 +56,8 @@ fun ShoppingListScreen(
                 .wrapContentHeight(),
             text = "Empty",
             fontSize = 25.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = EmptyText
         )
     }
 }
