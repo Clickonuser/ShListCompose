@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +41,7 @@ import com.example.shoplistcompose.ui.theme.BlueLight
 import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.EmptyText
 import com.example.shoplistcompose.ui.theme.GrayLight
+import com.example.shoplistcompose.utils.UiEvent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -49,6 +51,18 @@ fun AddItemScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val itemsList = viewModel.itemsList?.collectAsState(initial = emptyList())
 
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.ShowSnackBar -> {
+                    snackbarHostState.showSnackbar(
+                        message = uiEvent.message
+                    )
+                }
+                else -> {}
+            }
+        }
+    }
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)

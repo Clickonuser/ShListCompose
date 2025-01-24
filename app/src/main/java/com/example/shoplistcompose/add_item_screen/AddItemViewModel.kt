@@ -9,8 +9,11 @@ import com.example.shoplistcompose.data.AddItemRepository
 import com.example.shoplistcompose.data.ShoppingListItem
 import com.example.shoplistcompose.dialog.DialogController
 import com.example.shoplistcompose.dialog.DialogEvent
+import com.example.shoplistcompose.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +22,9 @@ class AddItemViewModel @Inject constructor(
     private val repository: AddItemRepository,
     savedStateHandle: SavedStateHandle
 ): ViewModel(), DialogController {
+
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     var itemsList: Flow<List<AddItem>>? = null
     var addItem: AddItem? = null
@@ -50,6 +56,11 @@ class AddItemViewModel @Inject constructor(
             is AddItemEvent.OnItemSave -> {
                 viewModelScope.launch {
                     if (listId == -1) return@launch
+                    val name = addItem?.name ?: itemText.value
+                    if (name.isEmpty()) {
+                        sendUiEvent(UiEvent.ShowSnackBar("Name can't be empty!"))
+                        return@launch
+                    }
                     repository.insertItem(
                         AddItem(
                             id = addItem?.id,
@@ -122,5 +133,9 @@ class AddItemViewModel @Inject constructor(
             }
         }
     }
-
+    private fun sendUiEvent(event: UiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
+        }
+    }
 }
