@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -124,5 +126,15 @@ fun AddItemScreen(
             }
         }
         MainDialog(dialogController = viewModel)
+        if(itemsList?.value?.isEmpty() == true) {
+            Text(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentHeight(),
+                text = "Empty",
+                fontSize = 25.sp,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
