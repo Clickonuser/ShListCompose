@@ -61,7 +61,7 @@ fun MainScreen(
             }
         },
         floatingActionButton = {
-            FloatingActionButton(
+            if (viewModel.showFloatingButton.value) FloatingActionButton(
                 onClick = {
                     viewModel.onEvent(MainScreenEvent.OnShowEditDialog)
                 },

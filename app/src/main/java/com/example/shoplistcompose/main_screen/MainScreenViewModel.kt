@@ -7,6 +7,7 @@ import com.example.shoplistcompose.data.ShoppingListItem
 import com.example.shoplistcompose.data.ShoppingListRepository
 import com.example.shoplistcompose.dialog.DialogController
 import com.example.shoplistcompose.dialog.DialogEvent
+import com.example.shoplistcompose.utils.Routes
 import com.example.shoplistcompose.utils.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -31,6 +32,9 @@ class MainScreenViewModel @Inject constructor(
     override var showEditableText = mutableStateOf(true)
         private set
 
+    var showFloatingButton = mutableStateOf(true)
+        private set
+
     fun onEvent(event: MainScreenEvent) {
         when (event) {
             is MainScreenEvent.OnItemSave -> {
@@ -52,6 +56,8 @@ class MainScreenViewModel @Inject constructor(
             }
             is MainScreenEvent.Navigate -> {
                 sendUiEvent(UiEvent.Navigate(event.route))
+                showFloatingButton.value =
+                    !(event.route == Routes.ABOUT || event.route == Routes.SETTINGS)
             }
             is MainScreenEvent.NavigateMain -> {
                 sendUiEvent(UiEvent.NavigateMain(event.route))
@@ -65,13 +71,11 @@ class MainScreenViewModel @Inject constructor(
                 openDialog.value = false
                 editableText.value = ""
             }
-
             is DialogEvent.OnConfirm -> {
                 onEvent(MainScreenEvent.OnItemSave)
                 openDialog.value = false
                 editableText.value = ""
             }
-
             is DialogEvent.OnTextChange -> {
                 editableText.value = event.text
             }
