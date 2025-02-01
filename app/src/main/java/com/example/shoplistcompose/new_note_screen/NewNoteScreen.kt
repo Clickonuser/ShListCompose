@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -24,13 +25,28 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoplistcompose.R
 import com.example.shoplistcompose.ui.theme.BlueLight
 import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.GrayLight
+import com.example.shoplistcompose.utils.UiEvent
 
 @Composable
-fun NewNoteScreen() {
+fun NewNoteScreen(
+    viewModel: NewNoteViewModel = hiltViewModel(),
+    onPopBackStack: () -> Unit
+) {
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.PopBackStack -> {
+                    onPopBackStack()
+                }
+                else -> {}
+            }
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -56,8 +72,10 @@ fun NewNoteScreen() {
                     TextField(
                         shape = RectangleShape,
                         modifier = Modifier.weight(1f),
-                        value = "",
-                        onValueChange = {},
+                        value = viewModel.title,
+                        onValueChange = { text ->
+                            viewModel.onEvent(NewNoteEvent.OnTitleChange(text))
+                        },
                         label = {
                             Text(
                                 text = "Title...",
@@ -81,7 +99,7 @@ fun NewNoteScreen() {
                     )
                     IconButton(
                         onClick = {
-
+                            viewModel.onEvent(NewNoteEvent.OnSave)
                         }
                     ) {
                         Icon(
@@ -94,9 +112,9 @@ fun NewNoteScreen() {
                 TextField(
                     shape = RectangleShape,
                     modifier = Modifier.fillMaxWidth(),
-                    value = "",
-                    onValueChange = {
-
+                    value = viewModel.description,
+                    onValueChange = { text ->
+                        viewModel.onEvent(NewNoteEvent.OnDescriptionChange(text))
                     },
                     label = {
                         Text(
