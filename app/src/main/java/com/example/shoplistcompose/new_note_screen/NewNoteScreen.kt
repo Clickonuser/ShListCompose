@@ -4,9 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -50,6 +54,8 @@ fun NewNoteScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
+            .windowInsetsPadding(WindowInsets.systemBars)
             .background(color = GrayLight)
     ) {
         Card(
@@ -85,7 +91,7 @@ fun NewNoteScreen(
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.White,
                             unfocusedContainerColor = Color.White,
-                            focusedIndicatorColor = BlueLight,
+                            focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = BlueLight,
                             focusedLabelColor = BlueLight,
                             cursorColor = BlueLight
@@ -125,7 +131,7 @@ fun NewNoteScreen(
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White,
-                        focusedIndicatorColor = BlueLight,
+                        focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedLabelColor = BlueLight,
                         cursorColor = BlueLight
