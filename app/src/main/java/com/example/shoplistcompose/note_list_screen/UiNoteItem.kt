@@ -20,12 +20,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.shoplistcompose.data.NoteItem
 import com.example.shoplistcompose.ui.theme.BlueLight
 import com.example.shoplistcompose.ui.theme.LightText
 import com.example.shoplistcompose.ui.theme.Red
+import com.example.shoplistcompose.utils.Routes
 
 @Composable
-fun UiNoteItem() {
+fun UiNoteItem(
+    item: NoteItem,
+    onEvent: (NoteListEvent) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,7 +40,9 @@ fun UiNoteItem() {
                 end = 3.dp
             )
             .clickable {
-
+                onEvent(NoteListEvent.OnItemClick(
+                    Routes.NEW_NOTE + "/${item.id}"
+                ))
             },
         shape = RoundedCornerShape(5.dp) // changes may come later
     ) {
@@ -51,7 +58,7 @@ fun UiNoteItem() {
                             start = 10.dp,
                         )
                         .weight(1f),
-                    text = "Note 1",
+                    text = item.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -60,7 +67,7 @@ fun UiNoteItem() {
                         top = 10.dp,
                         end = 10.dp
                     ),
-                    text = "25/01/2025 13:00",
+                    text = item.time,
                     color = BlueLight,
                     fontSize = 12.sp
                 )
@@ -75,14 +82,14 @@ fun UiNoteItem() {
                         )
                         .weight(1f)
                     ,
-                    text = "description",
+                    text = item.description,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = LightText
                 )
                 IconButton(
                     onClick = {
-
+                        onEvent(NoteListEvent.OnShowDeleteDialog(item))
                     }
                 ) {
                     Icon(
