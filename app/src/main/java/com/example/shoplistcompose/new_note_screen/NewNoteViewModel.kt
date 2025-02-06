@@ -50,6 +50,14 @@ class NewNoteViewModel @Inject constructor(
 
             is NewNoteEvent.OnSave -> {
                 viewModelScope.launch {
+                    if (title.isBlank()) {
+                        sendUiEvent(
+                            UiEvent.ShowSnackBar(
+                                message = "Title can't be empty!"
+                            )
+                        )
+                        return@launch
+                    }
                     repository.insertItem(
                         NoteItem(
                             id = noteItem?.id,
@@ -58,8 +66,8 @@ class NewNoteViewModel @Inject constructor(
                             time = "01/02/2025 13:00"
                         )
                     )
+                    sendUiEvent(UiEvent.PopBackStack)
                 }
-                sendUiEvent(UiEvent.PopBackStack)
             }
             is NewNoteEvent.OnTitleChange -> {
                 title = event.title

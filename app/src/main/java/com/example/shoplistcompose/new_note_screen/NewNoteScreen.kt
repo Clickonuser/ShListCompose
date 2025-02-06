@@ -16,11 +16,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -41,50 +45,101 @@ fun NewNoteScreen(
     viewModel: NewNoteViewModel = hiltViewModel(),
     onPopBackStack: () -> Unit
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { uiEvent ->
             when (uiEvent) {
                 is UiEvent.PopBackStack -> {
                     onPopBackStack()
                 }
+                is UiEvent.ShowSnackBar -> {
+                    snackbarHostState.showSnackbar(
+                        message = uiEvent.message
+                    )
+                }
                 else -> {}
             }
         }
     }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .imePadding()
-            .windowInsetsPadding(WindowInsets.systemBars)
-            .background(color = GrayLight)
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
     ) {
-        Card(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(5.dp),
-            shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp), // changes may come later
+                .imePadding()
+                .windowInsetsPadding(WindowInsets.systemBars)
+                .background(color = GrayLight)
         ) {
-            Column(
+            Card(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.White)
+                    .padding(5.dp),
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp), // changes may come later
             ) {
-                Row(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .background(Color.White)
                 ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.White)
+                    ) {
+                        TextField(
+                            shape = RectangleShape,
+                            modifier = Modifier.weight(1f),
+                            value = viewModel.title,
+                            onValueChange = { text ->
+                                viewModel.onEvent(NewNoteEvent.OnTitleChange(text))
+                            },
+                            label = {
+                                Text(
+                                    text = "Title...",
+                                    fontSize = 14.sp
+                                )
+                            },
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = BlueLight,
+                                focusedLabelColor = BlueLight,
+                                cursorColor = BlueLight
+                            ),
+                            textStyle = TextStyle(
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = DarkText
+                            ),
+                            singleLine = true
+                        )
+                        IconButton(
+                            onClick = {
+                                viewModel.onEvent(NewNoteEvent.OnSave)
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.save_icon),
+                                contentDescription = "Save",
+                                tint = BlueLight
+                            )
+                        }
+                    }
                     TextField(
                         shape = RectangleShape,
-                        modifier = Modifier.weight(1f),
-                        value = viewModel.title,
+                        modifier = Modifier.fillMaxWidth(),
+                        value = viewModel.description,
                         onValueChange = { text ->
-                            viewModel.onEvent(NewNoteEvent.OnTitleChange(text))
+                            viewModel.onEvent(NewNoteEvent.OnDescriptionChange(text))
                         },
                         label = {
                             Text(
-                                text = "Title...",
+                                text = "Description...",
                                 fontSize = 14.sp
                             )
                         },
@@ -92,55 +147,16 @@ fun NewNoteScreen(
                             focusedContainerColor = Color.White,
                             unfocusedContainerColor = Color.White,
                             focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = BlueLight,
+                            unfocusedIndicatorColor = Color.Transparent,
                             focusedLabelColor = BlueLight,
                             cursorColor = BlueLight
                         ),
                         textStyle = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
                             color = DarkText
-                        ),
-                        singleLine = true
-                    )
-                    IconButton(
-                        onClick = {
-                            viewModel.onEvent(NewNoteEvent.OnSave)
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.save_icon),
-                            contentDescription = "Save",
-                            tint = BlueLight
                         )
-                    }
+                    )
                 }
-                TextField(
-                    shape = RectangleShape,
-                    modifier = Modifier.fillMaxWidth(),
-                    value = viewModel.description,
-                    onValueChange = { text ->
-                        viewModel.onEvent(NewNoteEvent.OnDescriptionChange(text))
-                    },
-                    label = {
-                        Text(
-                            text = "Description...",
-                            fontSize = 14.sp
-                        )
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedLabelColor = BlueLight,
-                        cursorColor = BlueLight
-                    ),
-                    textStyle = TextStyle(
-                        fontSize = 14.sp,
-                        color = DarkText
-                    )
-                )
             }
         }
     }
