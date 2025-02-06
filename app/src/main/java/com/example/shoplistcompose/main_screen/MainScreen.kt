@@ -25,6 +25,7 @@ import com.example.shoplistcompose.R
 import com.example.shoplistcompose.dialog.MainDialog
 import com.example.shoplistcompose.navigation.NavigationGraph
 import com.example.shoplistcompose.ui.theme.BlueLight
+import com.example.shoplistcompose.utils.Routes
 import com.example.shoplistcompose.utils.UiEvent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -63,7 +64,7 @@ fun MainScreen(
         floatingActionButton = {
             if (viewModel.showFloatingButton.value) FloatingActionButton(
                 onClick = {
-                    viewModel.onEvent(MainScreenEvent.OnShowEditDialog)
+                    viewModel.onEvent(MainScreenEvent.OnNewItemClick(currentRoute ?: Routes.SHOPPING_LIST))
                 },
                 shape = CircleShape,
                 containerColor = BlueLight,
