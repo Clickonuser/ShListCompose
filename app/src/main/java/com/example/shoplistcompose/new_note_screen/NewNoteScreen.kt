@@ -1,5 +1,6 @@
 package com.example.shoplistcompose.new_note_screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.GrayLight
 import com.example.shoplistcompose.utils.UiEvent
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun NewNoteScreen(
     viewModel: NewNoteViewModel = hiltViewModel(),

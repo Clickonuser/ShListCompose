@@ -1,5 +1,6 @@
 package com.example.shoplistcompose.note_list_screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,9 +28,9 @@ import com.example.shoplistcompose.dialog.MainDialog
 import com.example.shoplistcompose.ui.theme.BlueLight
 import com.example.shoplistcompose.ui.theme.EmptyText
 import com.example.shoplistcompose.ui.theme.GrayLight
-import com.example.shoplistcompose.ui.theme.Red
 import com.example.shoplistcompose.utils.UiEvent
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun NoteListScreen(
     viewModel: NoteListViewModel = hiltViewModel(),
