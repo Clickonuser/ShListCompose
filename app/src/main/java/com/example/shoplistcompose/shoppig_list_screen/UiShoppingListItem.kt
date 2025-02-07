@@ -31,6 +31,7 @@ import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.GreenLight
 import com.example.shoplistcompose.ui.theme.LightText
 import com.example.shoplistcompose.ui.theme.Red
+import com.example.shoplistcompose.utils.ProgressHelper
 import com.example.shoplistcompose.utils.Routes
 
 @Composable
@@ -49,10 +50,13 @@ fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> U
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }.clickable {
-                    onEvent(ShoppingListEvent.OnItemClick(
-                        Routes.ADD_ITEM + "/${item.id}"
-                    ))
+                }
+                .clickable {
+                    onEvent(
+                        ShoppingListEvent.OnItemClick(
+                            Routes.ADD_ITEM + "/${item.id}"
+                        )
+                    )
                 },
             shape = RoundedCornerShape(5.dp) // changes may come later
         ) {
@@ -81,7 +85,12 @@ fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> U
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 5.dp),
-                    progress = { 0.5f },
+                    progress = {
+                        ProgressHelper.getProgress(
+                            allItemsCount = item.allItemsCount,
+                            selectedItemsCount = item.allSelectedItemsCount
+                        )
+                    },
                     color = BlueLight,
                     trackColor = Color.LightGray // changes may come later
                 )
