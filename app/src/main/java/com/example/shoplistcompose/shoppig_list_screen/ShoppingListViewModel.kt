@@ -8,6 +8,7 @@ import com.example.shoplistcompose.data.ShoppingListRepository
 import com.example.shoplistcompose.dialog.DialogController
 import com.example.shoplistcompose.dialog.DialogEvent
 import com.example.shoplistcompose.utils.UiEvent
+import com.example.shoplistcompose.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -43,8 +44,8 @@ class ShoppingListViewModel @Inject constructor(
                     repository.insertItem(
                         ShoppingListItem(
                             id = listItem?.id,
-                            name = editableText.value, // will be from dialog
-                            time = "12-12-2024 13:00", // will be from special function
+                            name = editableText.value,
+                            time = listItem?.time ?: getCurrentTime(), // My extension
                             allItemsCount = listItem?.allItemsCount ?: 0,
                             allSelectedItemsCount = listItem?.allSelectedItemsCount ?: 0
                         )

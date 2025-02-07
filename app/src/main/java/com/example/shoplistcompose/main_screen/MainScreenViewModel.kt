@@ -9,6 +9,7 @@ import com.example.shoplistcompose.dialog.DialogController
 import com.example.shoplistcompose.dialog.DialogEvent
 import com.example.shoplistcompose.utils.Routes
 import com.example.shoplistcompose.utils.UiEvent
+import com.example.shoplistcompose.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -44,7 +45,7 @@ class MainScreenViewModel @Inject constructor(
                         ShoppingListItem(
                             id = null,
                             name = editableText.value,
-                            time = "12-12-2024 13:00", // will be from special function
+                            time = getCurrentTime(), // My extension
                             allItemsCount = 0,
                             allSelectedItemsCount = 0
                         )
