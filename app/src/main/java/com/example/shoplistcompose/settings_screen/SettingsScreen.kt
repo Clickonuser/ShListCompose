@@ -31,7 +31,9 @@ fun SettingsScreen(
             modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
         ) {
             items(list) {item ->
-                UiColorItem(item = item)
+                UiColorItem(item = item) { event ->
+                    viewModel.onEvent(event)
+                }
             }
         }
     }

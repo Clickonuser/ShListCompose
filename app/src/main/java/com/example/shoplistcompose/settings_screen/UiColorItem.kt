@@ -16,10 +16,13 @@ import com.example.shoplistcompose.R
 
 @Composable
 fun UiColorItem(
-    item: ColorItem
+    item: ColorItem,
+    onEvent: (SettingsEvent) -> Unit
 ) {
     IconButton(
-        onClick = {},
+        onClick = {
+            onEvent(SettingsEvent.OnItemSelected(item.color))
+        },
         modifier = Modifier
             .padding(start = 10.dp)
             .clip(CircleShape)
