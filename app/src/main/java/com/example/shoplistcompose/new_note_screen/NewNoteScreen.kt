@@ -123,7 +123,9 @@ fun NewNoteScreen(
                             textStyle = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = DarkText
+                                color = Color(
+                                    android.graphics.Color.parseColor(viewModel.titleColor.value)
+                                )
                             ),
                             singleLine = true
                         )
