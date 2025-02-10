@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.shoplistcompose.R
 import com.example.shoplistcompose.data.ShoppingListItem
-import com.example.shoplistcompose.ui.theme.BlueLight
+import com.example.shoplistcompose.settings_screen.ColorUtils
 import com.example.shoplistcompose.ui.theme.DarkText
 import com.example.shoplistcompose.ui.theme.GreenLight
 import com.example.shoplistcompose.ui.theme.LightText
@@ -36,6 +36,12 @@ import com.example.shoplistcompose.utils.Routes
 
 @Composable
 fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> Unit) {
+
+    val progress = ProgressHelper.getProgress(
+        allItemsCount = item.allItemsCount,
+        selectedItemsCount = item.allSelectedItemsCount
+    )
+
     ConstraintLayout(
         modifier = Modifier.padding(
             start = 3.dp, top = 18.dp, end = 3.dp
@@ -86,12 +92,9 @@ fun UiShoppingListItem(item: ShoppingListItem, onEvent: (ShoppingListEvent) -> U
                         .fillMaxWidth()
                         .padding(top = 5.dp),
                     progress = {
-                        ProgressHelper.getProgress(
-                            allItemsCount = item.allItemsCount,
-                            selectedItemsCount = item.allSelectedItemsCount
-                        )
+                        progress
                     },
-                    color = BlueLight,
+                    color = ColorUtils.getProgressColor(progress),
                     trackColor = Color.LightGray // changes may come later
                 )
             }
