@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [NoteItem::class, ShoppingListItem::class, AddItem::class],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 abstract class MainDb : RoomDatabase() {
     abstract val shoppingListDao: ShoppingListDao
