@@ -19,7 +19,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             dataStoreManager.getStringPreference(
                 key = DataStoreManager.TITLE_COLOR,
-                defValue = "#487242"
+                defValue = "#FF000000"
             ).collect { selectedColor ->
 
                 val tempColorItemList = ArrayList<ColorItem>()
