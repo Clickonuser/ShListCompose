@@ -25,8 +25,8 @@ fun SettingsScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(text = "Title color", fontSize = 16.sp)
-        Text(text = "Select a title color:", fontSize = 12.sp, color = Color.Gray)
+        Text(text = "Note title color", fontSize = 16.sp)
+        Text(text = "Select color:", fontSize = 12.sp, color = Color.Gray)
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
         ) {
